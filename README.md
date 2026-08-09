@@ -1,4 +1,4 @@
-# Magmacrunchmedia Tap
+# magmacrunchmedia tap
 
 ## How do I install these formulae?
 
