@@ -1,10 +1,10 @@
 class Texastoast < Formula
   include Language::Python::Virtualenv
 
-  desc "Python RPG engine and Magma Hub I2C layer for magmacrunch game systems"
+  desc "Python RPG engine with I2C hardware abstraction for magmacrunch game systems"
   homepage "https://github.com/magmacrunchmedia/texastoast"
-  url "https://files.pythonhosted.org/packages/4d/ff/4d6a891defd52a5aa3c1607da3937a5f775bb48d8138a01281801b46a99b/texastoast-0.1.2.tar.gz"
-  sha256 "117363fc4b10cb8a60bbdf2b0c9fe30368bf383f3fd4ef51cddf878861107734"
+  url "https://files.pythonhosted.org/packages/85/43/5ef7e93ab84a244e99d01cd60c0b085ac8f313e40764291f339211ad37a4/texastoast-0.1.3.tar.gz"
+  sha256 "0ddb5be097eaf36adc0ecf5aef37f979c165bd462c8ff77107592d21d141f990"
   license "Apache-2.0"
 
   depends_on "python@3.12"
