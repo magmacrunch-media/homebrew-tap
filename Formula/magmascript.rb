@@ -3,8 +3,8 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://github.com/magmacrunchmedia/magmascript"
-  url "https://files.pythonhosted.org/packages/source/m/magmascript/magmascript-1.6.0.tar.gz"
-  sha256 "9cbc6107a9a964a8317a79ffa8ec4f5d64529573c392a4eca6953ac01e01c1ae"
+  url "https://files.pythonhosted.org/packages/61/2d/6d2ad14d00dc4206348442862f11b7fc525c34255865918818af5c3e45b2/magmascript-3.2.0.tar.gz"
+  sha256 "f50ebc7b2d89a6c6666cea78a06af9293d60f282c48ef2518221d23b62520125"
   license "MIT"
 
   depends_on "python@3.13"
@@ -35,11 +35,11 @@ class Magmascript < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/cd/63/9496c57188a2ee585e0f1db071d75089a11e98aa86eb99d9d7618fc1edce/idna-3.18.tar.gz"
-    sha256 "ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848"
+    url "https://files.pythonhosted.org/packages/5f/f7/abb373e5757eaec4b922b92f97ec8d6d7e057cf06778247604fbc4e7c3f3/idna-3.19.tar.gz"
+    sha256 "5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15"
   end
 
-  resource "markdown_it_py" do
+  resource "markdown-it-py" do
     url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
     sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
   end
@@ -49,14 +49,14 @@ class Magmascript < Formula
     sha256 "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
   end
 
-  resource "prompt_toolkit" do
+  resource "prompt-toolkit" do
     url "https://files.pythonhosted.org/packages/7d/ea/39b988c938f75cb75d7045b5c69f8bfed47ee2152c8837fb403de29d6fb8/prompt_toolkit-3.0.53.tar.gz"
     sha256 "9ec8a0ad96d5c56148b3f914aa79c1564c3fde5d2e6b876e7bc327e353cf8fa6"
   end
 
   resource "pygments" do
-    url "https://files.pythonhosted.org/packages/c3/b2/bc9c9196916376152d655522fdcebac55e66de6603a76a02bca1b6414f6c/pygments-2.20.0.tar.gz"
-    sha256 "6757cd03768053ff99f3039c1a36d6c0aa0b263438fcab17520b30a303a82b5f"
+    url "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz"
+    sha256 "610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"
   end
 
   resource "rich" do
