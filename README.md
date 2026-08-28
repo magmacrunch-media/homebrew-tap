@@ -13,6 +13,14 @@ tap "magmacrunchmedia/tap"
 brew "<formula>"
 ```
 
+## On Tap
+
+| Formula | Description |
+|---------|-------------|
+| `texastoast` | Python RPG engine with I2C hardware abstraction for magmacrunch game systems |
+| `magmacrunch` | Terminal arcade — a card grid of every installed cabinet |
+| `magmascript` | Scripting toolkit with domain-first subcommands |
+
 ## Documentation
 
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
