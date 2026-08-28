@@ -3,8 +3,8 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://github.com/magmacrunchmedia/magmascript"
-  url "https://files.pythonhosted.org/packages/61/2d/6d2ad14d00dc4206348442862f11b7fc525c34255865918818af5c3e45b2/magmascript-3.2.0.tar.gz"
-  sha256 "f50ebc7b2d89a6c6666cea78a06af9293d60f282c48ef2518221d23b62520125"
+  url "https://files.pythonhosted.org/packages/0c/a7/da106b721fcacc02252bb894cc4ed71576ed095e39a026f2ed00a5971e74/magmascript-3.2.1.tar.gz"
+  sha256 "4e440aa7b42c19e3f9881c4ccfa296b106fac476fb14691512189868746fdf55"
   license "MIT"
 
   depends_on "python@3.13"
@@ -65,8 +65,8 @@ class Magmascript < Formula
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/34/74/c6428f875774288bec1396f5bfcbc2d925700a4dad61727fd5f2b12f249d/wcwidth-0.8.2.tar.gz"
-    sha256 "91fbef97204b96a3d4d421609b80340b760cf33e26da123ff243d76b1fda8dda"
+    url "https://files.pythonhosted.org/packages/36/57/ed58088fafdf4c55a0ad6bde846502567645424d7ebf325230b9237f4085/wcwidth-0.8.3.tar.gz"
+    sha256 "d128512515fbf4612e0ff21fd6380399210318b7b54a9af59dff8454cf9730eb"
   end
 
   def install
