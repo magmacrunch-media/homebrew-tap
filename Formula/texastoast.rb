@@ -14,6 +14,10 @@ class Texastoast < Formula
   end
 
   test do
-    system "#{bin}/python3.12", "-c", "import texastoast; print(texastoast.__version__)"
+    # The virtualenv's own interpreter, not bin/. virtualenv_install_with_resources
+    # builds the venv under libexec and links only console scripts into bin, so
+    # there is no bin/python3.12 here to run this with.
+    output = shell_output("#{libexec}/bin/python -c 'import texastoast; print(texastoast.__version__)'")
+    assert_match version.to_s, output
   end
 end
