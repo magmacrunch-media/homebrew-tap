@@ -18,6 +18,7 @@ import os
 import pathlib
 import re
 import sys
+import urllib.error
 import urllib.request
 
 # Top-level directives are indented two spaces; the identical directives inside
@@ -29,34 +30,61 @@ BOTTLE = re.compile(r"^  bottle do\n(?:.*\n)*?  end\n\n?", re.MULTILINE)
 SDIST = re.compile(r"/(?P<name>[^/]+)-(?P<version>[^-/]+)\.tar\.gz$")
 
 
+class Skip(Exception):
+    """This one formula cannot be bumped from PyPI. The others still can.
+
+    A tap is allowed to hold formulae this script has no business touching —
+    anything not published to PyPI, and anything whose newest release ships
+    wheels only. Those are facts about that formula, not faults in the run, so
+    they must not take the other formulae down with them. Raising `SystemExit`
+    here would mean one GitHub-tarball formula silently ends all bumping.
+    """
+
+
+def warn(message: str) -> None:
+    """Say what was skipped, somewhere a person will actually see it."""
+    if os.environ.get("GITHUB_ACTIONS"):
+        print(f"::warning::{message}")
+    else:
+        print(f"warning: {message}", file=sys.stderr)
+
+
 def pypi(project: str) -> dict:
-    with urllib.request.urlopen(
-        f"https://pypi.org/pypi/{project}/json", timeout=30
-    ) as response:
-        return json.load(response)
+    try:
+        with urllib.request.urlopen(
+            f"https://pypi.org/pypi/{project}/json", timeout=30
+        ) as response:
+            return json.load(response)
+    except urllib.error.HTTPError as error:
+        # A 404 is a fact about this project - renamed, withdrawn, never
+        # published - not a reason to abandon the run. Anything else (a 5xx, a
+        # rate limit) is about PyPI, and failing loudly is right for that.
+        if error.code == 404:
+            raise Skip(f"no such project on PyPI: {project}") from error
+        raise
 
 
 def sdist_of(release: list[dict]) -> dict:
     for file in release:
         if file["packagetype"] == "sdist":
             return file
-    raise SystemExit("no sdist in the latest release")
+    raise Skip("newest release publishes no sdist")
 
 
 def current(formula: str) -> tuple[str, str]:
     """The version the formula points at, and the project name PyPI knows."""
     match = URL.search(formula)
     if not match:
-        raise SystemExit("no top-level url in formula")
+        raise Skip("no top-level url in formula")
     filename = SDIST.search(match.group("url"))
     if not filename:
-        raise SystemExit(f"url is not a PyPI sdist: {match.group('url')}")
+        raise Skip(f"url is not a PyPI sdist: {match.group('url')}")
     # PyPI normalises underscores in filenames back to hyphens in project names.
     return filename.group("version"), filename.group("name").replace("_", "-")
 
 
-def bump(path: pathlib.Path) -> str | None:
-    """Rewrite `path` in place if PyPI is ahead. Returns the new version."""
+def plan(path: pathlib.Path) -> tuple[str, str, str] | None:
+    """The rewritten formula, and the versions either side. Writes nothing."""
     formula = path.read_text(encoding="utf-8")
     have, project = current(formula)
 
@@ -71,10 +99,7 @@ def bump(path: pathlib.Path) -> str | None:
         lambda _: f'  sha256 "{file["digests"]["sha256"]}"', formula, count=1
     )
     formula = BOTTLE.sub("", formula, count=1)
-
-    path.write_text(formula, encoding="utf-8", newline="\n")
-    print(f"{path.stem}: {have} -> {want}")
-    return want
+    return formula, have, want
 
 
 def main() -> int:
@@ -84,13 +109,27 @@ def main() -> int:
         else sorted(pathlib.Path("Formula").glob("*.rb"))
     )
 
-    bumped = {}
+    # Every formula is considered before any of them is written, so a formula
+    # that cannot be read never leaves the tap half-rewritten behind it. That
+    # matters most when this is run by hand, against a working copy someone
+    # cares about rather than a runner that is about to be thrown away.
+    planned = {}
     for path in paths:
         if not path.exists():
             raise SystemExit(f"no such formula: {path}")
-        version = bump(path)
-        if version:
-            bumped[path.stem] = version
+        try:
+            proposal = plan(path)
+        except Skip as reason:
+            warn(f"skipped {path.stem}: {reason}")
+            continue
+        if proposal:
+            planned[path] = proposal
+
+    bumped = {}
+    for path, (formula, have, want) in planned.items():
+        path.write_text(formula, encoding="utf-8", newline="\n")
+        print(f"{path.stem}: {have} -> {want}")
+        bumped[path.stem] = want
 
     if not bumped:
         print("every formula is already current")

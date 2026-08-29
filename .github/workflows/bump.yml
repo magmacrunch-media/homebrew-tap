@@ -95,12 +95,39 @@ jobs:
           set -euo pipefail
           cd "$(brew --repository "$GITHUB_REPOSITORY")"
 
-          # Force, because the branch name is a function of the versions found:
-          # a rerun that finds the same releases should update the open pull
-          # request rather than open a second one beside it.
+          # The branch name is a function of the versions found, so a rerun
+          # that finds the same releases lands on the same branch. That is what
+          # keeps it updating one pull request instead of opening a new one
+          # every morning - but it also means a blind force-push would throw
+          # away anything a person had committed onto that branch in between.
+          base=$(git rev-parse HEAD)
           git checkout -b "$BRANCH"
           git commit -am "$TITLE"
-          git push --force origin "$BRANCH"
+
+          push=true
+          if git fetch --quiet origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"; then
+            # This job leaves exactly one commit on top of main. More than that
+            # means someone has been working here - a fixed test block, a
+            # correction - and force-pushing would delete it silently.
+            ahead=$(git rev-list --count "$base..origin/$BRANCH")
+            if [ "$ahead" -gt 1 ]; then
+              echo "::warning::$BRANCH carries $ahead commits on top of main, so someone has worked on it. Refusing to force-push over that. Merge or delete the branch to let this run again."
+              exit 0
+            fi
+
+            # Same content as what is already pushed. Pushing anyway would give
+            # the branch a new sha for no reason, and a new sha discards the
+            # bottles this pull request's CI has already built - which is the
+            # one thing `brew pr-pull` needs from it.
+            if [ "$(git rev-parse "origin/$BRANCH^{tree}")" = "$(git rev-parse "HEAD^{tree}")" ]; then
+              echo "$BRANCH already has exactly this content; leaving it and its CI alone."
+              push=false
+            fi
+          fi
+
+          if [ "$push" = true ]; then
+            git push --force origin "$BRANCH"
+          fi
 
           if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[]')" ]; then
             echo "Pull request for $BRANCH already open; updated the branch in place."
