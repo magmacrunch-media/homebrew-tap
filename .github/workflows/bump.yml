@@ -57,7 +57,11 @@ jobs:
         run: |
           set -euo pipefail
           cd "$(brew --repository "$GITHUB_REPOSITORY")"
-          python3 .github/scripts/pypi_bump.py ${FORMULAE}
+          # An array, because shellcheck is right that bare ${FORMULAE} would
+          # glob as readily as it splits. Empty input yields an empty array
+          # and the script then does every formula, which is the default.
+          read -ra names <<< "${FORMULAE}"
+          python3 .github/scripts/pypi_bump.py "${names[@]}"
 
       # Homebrew's own resolver rather than a second-rate reimplementation of
       # it. This is also the step that fails loudly when a new release cannot
@@ -71,7 +75,8 @@ jobs:
         run: |
           set -euo pipefail
           cd "$(brew --repository "$GITHUB_REPOSITORY")"
-          for formula in ${FORMULAE}; do
+          read -ra names <<< "${FORMULAE}"
+          for formula in "${names[@]}"; do
             brew update-python-resources "${OWNER}/tap/${formula}"
           done
 
