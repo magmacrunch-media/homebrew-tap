@@ -29,6 +29,13 @@ SHA = re.compile(r'^  sha256 "(?P<sha>[0-9a-f]{64})"', re.MULTILINE)
 BOTTLE = re.compile(r"^  bottle do\n(?:.*\n)*?  end\n\n?", re.MULTILINE)
 SDIST = re.compile(r"/(?P<name>[^/]+)-(?P<version>[^-/]+)\.tar\.gz$")
 
+# Plain numeric releases - 0.11.0, 3.2.1, 2026.7.22 - and nothing else. PEP 440
+# also allows epochs, pre/post/dev segments and local versions, and ordering
+# those correctly is `packaging`'s job rather than something to approximate
+# here. Anything not matching is refused below instead of guessed at, so the
+# failure is a visible skip rather than a wrong bump.
+NUMERIC = re.compile(r"^\d+(?:\.\d+)*$")
+
 
 class Skip(Exception):
     """This one formula cannot be bumped from PyPI. The others still can.
@@ -49,10 +56,29 @@ def warn(message: str) -> None:
         print(f"warning: {message}", file=sys.stderr)
 
 
-def pypi(project: str) -> dict:
+def ordering(version: str, where: str) -> tuple[int, ...]:
+    """A comparable form of `version`, or a refusal to compare it at all."""
+    if not NUMERIC.match(version):
+        raise Skip(f"cannot order {where} version {version!r} against the other")
+    return tuple(int(part) for part in version.split("."))
+
+
+def newer(want: str, have: str) -> bool:
+    """Is PyPI actually ahead? Padded, so 0.11 beats 0.1.3 and 1.0 ties 1.0.0."""
+    a, b = ordering(want, "PyPI's"), ordering(have, "the formula's")
+    width = max(len(a), len(b))
+    return a + (0,) * (width - len(a)) > b + (0,) * (width - len(b))
+
+
+def pypi(project: str, version: str | None = None) -> dict:
+    # The per-version endpoint rather than the `releases` map on the project
+    # one: that map is on PyPI's deprecation path, and `urls` here is the
+    # supported way to ask what files a given release published. It costs one
+    # extra request, and only on the runs that actually find a bump.
+    path = f"{project}/{version}" if version else project
     try:
         with urllib.request.urlopen(
-            f"https://pypi.org/pypi/{project}/json", timeout=30
+            f"https://pypi.org/pypi/{path}/json", timeout=30
         ) as response:
             return json.load(response)
     except urllib.error.HTTPError as error:
@@ -60,7 +86,7 @@ def pypi(project: str) -> dict:
         # published - not a reason to abandon the run. Anything else (a 5xx, a
         # rate limit) is about PyPI, and failing loudly is right for that.
         if error.code == 404:
-            raise Skip(f"no such project on PyPI: {project}") from error
+            raise Skip(f"no such release on PyPI: {path}") from error
         raise
 
 
@@ -88,12 +114,18 @@ def plan(path: pathlib.Path) -> tuple[str, str, str] | None:
     formula = path.read_text(encoding="utf-8")
     have, project = current(formula)
 
-    data = pypi(project)
-    want = data["info"]["version"]
+    want = pypi(project)["info"]["version"]
     if want == have:
         return None
 
-    file = sdist_of(data["releases"][want])
+    # `info.version` is whatever PyPI calls latest *today*, and that can move
+    # backwards: yank a release and it falls back to the one before. Bumping on
+    # mere inequality would walk the formula down to it, under a title that
+    # reads like an upgrade.
+    if not newer(want, have):
+        raise Skip(f"PyPI is at {want}, behind the formula's {have}; not moving it backwards")
+
+    file = sdist_of(pypi(project, want)["urls"])
     formula = URL.sub(lambda _: f'  url "{file["url"]}"', formula, count=1)
     formula = SHA.sub(
         lambda _: f'  sha256 "{file["digests"]["sha256"]}"', formula, count=1
