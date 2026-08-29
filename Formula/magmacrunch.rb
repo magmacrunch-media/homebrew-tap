@@ -3,17 +3,19 @@ class Magmacrunch < Formula
 
   desc "Terminal arcade - a card grid of every installed cabinet"
   homepage "https://github.com/magmacrunchmedia/magmacrunch"
-  url "https://files.pythonhosted.org/packages/be/1f/6b5a27157d2915bb54149dbb54e3a7b8be540ac5f5d362a76925ec08a2e9/magmacrunch-0.1.1.tar.gz"
-  sha256 "c60543e8576ef264272f8f019052b10805f1e6014ee044d51e7e2e4e96b047fb"
+  url "https://files.pythonhosted.org/packages/c3/cd/5fb99efeeb55600280d2df1802cbae4c014726b521bc1dbd08fde8069462/magmacrunch-0.1.2.tar.gz"
+  sha256 "90d88738a6080198b130fef89ef201cde9a58ae2faa7f7ea56022b084004d8e0"
   # Not an open-source licence. The engine underneath (texastoast) is
   # Apache-2.0; the arcade and the games it seats are not, and a package cannot
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
 
   bottle do
-    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/magmacrunch-0.1.1"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "f955c92335f06fc2e8eea1fa4222c4a5f1e955ec669611f691f2f1d0ffbb3752"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "e927c48ecbe337f759a0bb279499c4cda38d6e4a1b3397200dbf02e8b1073c8d"
+    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/magmacrunch-0.1.2"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "c29400a1b7c3cb038cad24b5dfe4ebb86316e83fabf10e68a29dc6f54ce4dca4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0ba6a96f0792f158e89312ebf616f1d1adf779c31973d36bc8caac0f5eef4f1a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "75ffe56650e6afd5b5ae20d51fe366dc54798e00d8d23a75119f2cf02c4d7cc1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ae5d8d81c0b2a2407620a994eb0c018b7fd076728f7800ee6734b0d0a443085"
   end
 
   depends_on "python@3.12"
@@ -24,18 +26,18 @@ class Magmacrunch < Formula
   end
 
   resource "magmacrunch-george-boole" do
-    url "https://files.pythonhosted.org/packages/91/01/9dd51c405bdcf7ebe531da2460cd482ece6e13b0d97b64cfbc0e00bb58cc/magmacrunch_george_boole-0.1.0.tar.gz"
-    sha256 "7f54fa993598583b1d9f2afb28b05e6c556504fa0d977eb4cdbe49ad6949b789"
+    url "https://files.pythonhosted.org/packages/64/46/f92f5b998eb6e408243923c24c33066ac365242f29e9430d08abd21afd8e/magmacrunch_george_boole-0.2.0.tar.gz"
+    sha256 "04017151823f24a8637907e20421d278539e7c7a93ac2677f0a74306ab7ad9e8"
   end
 
   resource "magmacrunch-moonlight-drift" do
-    url "https://files.pythonhosted.org/packages/ab/86/bb48c7f210b5f6aaca096d786bddffc67a34d1e24e2aaa2b485af7217d56/magmacrunch_moonlight_drift-0.1.0.tar.gz"
-    sha256 "c2f71ad97603d85d605eb78896612f47fd26d2a6f2725bf98a9a1952dddb6941"
+    url "https://files.pythonhosted.org/packages/11/2a/20b678978feebb45c134cc644c7a41abeeb0821bb75a2928c7f81d131c18/magmacrunch_moonlight_drift-0.2.0.tar.gz"
+    sha256 "4b5debae20bb750064ffb9307d6d6c6942574bb21dd0ced608ee540d0110a8a6"
   end
 
   resource "magmacrunch-thld" do
-    url "https://files.pythonhosted.org/packages/5f/73/31a105a322f2d67b173b485c748344a8cc9ae896afd5d602c258174fdd29/magmacrunch_thld-0.1.0.tar.gz"
-    sha256 "58bf71b183c7f7f0b47d9406d5d0c0046857682e4f290121dd95ddc1ad418b68"
+    url "https://files.pythonhosted.org/packages/9d/86/397c20837e8b9e8c5496a9bdfd37e8a477b7ce2e158ccb78dbcfb5d76c77/magmacrunch_thld-0.1.1.tar.gz"
+    sha256 "4bcbce45bde60e80d22f4c9a093e25f976d4bf84d4e050cb8f9281b2cc1be576"
   end
 
   resource "markdown-it-py" do
@@ -54,8 +56,8 @@ class Magmacrunch < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/50/bb/ebc6636e1ae41314f796ebb7215fd28febb45f9aac72f2b04cb74b5071dc/platformdirs-4.11.4.tar.gz"
-    sha256 "f3373be828247211d0febabea97e238c3dfde8a60b3c90c32756fb52cb21556d"
+    url "https://files.pythonhosted.org/packages/ea/06/cf1564dcc2e2261c8c8c6c05628dc8b418943bdae2a4e58640ceb2f770fa/platformdirs-4.11.5.tar.gz"
+    sha256 "e8b31f4f8bcbbedef91a6b57a706255e4f148d2a4e01648382a0a47342539173"
   end
 
   resource "Pygments" do
@@ -69,8 +71,8 @@ class Magmacrunch < Formula
   end
 
   resource "texastoast" do
-    url "https://files.pythonhosted.org/packages/22/fb/6dc531af6bfb9c6767402f05304b820abfdd7b1d0f4208aa7668e65ee2ac/texastoast-0.10.0.tar.gz"
-    sha256 "8125c67e6885e22ee1e4224520d6029bc06ea1878e614a8bc97a44903c0e5570"
+    url "https://files.pythonhosted.org/packages/32/c3/a1cd1cb1f0a3c95f3f20cf8a7ae661107b605b3bbdfeaad39558d3448662/texastoast-0.11.0.tar.gz"
+    sha256 "0af1ce24da3092c5c8ffa402bd110450fb0cc0f977a5c3f892745e2fd37258ef"
   end
 
   resource "textual" do

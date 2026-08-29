@@ -9,10 +9,37 @@ on:
 jobs:
   test-bot:
     strategy:
+      # One platform failing must not cancel the others: a cancelled job
+      # uploads no bottle, and a formula that lands missing a bottle sends
+      # every user on that platform down a source build.
+      fail-fast: false
       matrix:
-        os: [ macos-26 ]
+        # Each entry here becomes one bottle tag on the published formula:
+        #
+        #   macos-26          arm64_tahoe
+        #   macos-15          arm64_sequoia
+        #   ubuntu-latest     x86_64_linux
+        #   ubuntu-24.04-arm  aarch64_linux
+        #
+        # Between them that is every platform Homebrew still calls tier 1,
+        # and all four are standard runners - free on a public repo.
+        #
+        # Intel macOS is deliberately absent. The only images left for it
+        # (macos-15-intel, macos-26-intel) are larger runners, which GitHub
+        # bills by the minute even on a public repo, and Homebrew is winding
+        # Intel down anyway. An Intel Mac still installs - it just builds
+        # from source, which for a stack of pure-Python wheels is slow rather
+        # than broken. Add the label here if that trade stops being worth it.
+        os: [ macos-26, macos-15 ]
         include:
           - os: ubuntu-latest
+            container:
+              image: ghcr.io/homebrew/brew:main
+              options: --privileged
+          # ghcr.io/homebrew/brew:main is a multi-arch image, so the same
+          # container runs here. ARM Linux has been tier 1 in Homebrew since
+          # 5.0.0, and this runner is a standard one - free on a public repo.
+          - os: ubuntu-24.04-arm
             container:
               image: ghcr.io/homebrew/brew:main
               options: --privileged

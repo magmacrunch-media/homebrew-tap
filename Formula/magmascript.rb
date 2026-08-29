@@ -2,10 +2,18 @@ class Magmascript < Formula
   include Language::Python::Virtualenv
 
   desc "Scripting toolkit with domain-first subcommands"
-  homepage "https://github.com/magmacrunchmedia/magmascript"
-  url "https://files.pythonhosted.org/packages/61/2d/6d2ad14d00dc4206348442862f11b7fc525c34255865918818af5c3e45b2/magmascript-3.2.0.tar.gz"
-  sha256 "f50ebc7b2d89a6c6666cea78a06af9293d60f282c48ef2518221d23b62520125"
+  homepage "https://magmacrunch.com/ware/magmascript/"
+  url "https://files.pythonhosted.org/packages/0c/a7/da106b721fcacc02252bb894cc4ed71576ed095e39a026f2ed00a5971e74/magmascript-3.2.1.tar.gz"
+  sha256 "4e440aa7b42c19e3f9881c4ccfa296b106fac476fb14691512189868746fdf55"
   license "MIT"
+
+  bottle do
+    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/magmascript-3.2.1"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ddf2dc3a695cf2a34b3ddf1558774b763622683f9d626bfdd6b3c18fcbaa52d6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9f5f7e398de06e67442ee9e95875191d3a9665b037657b6e5a14b0a438e6cbca"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b6e78b212b02f74d834ebb4091cb4ab0efd9f326248edd49ab1a537949b869f5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "66af049350de84a30787ba61762963b5f53f138e1ce16bfd7f5ed26d844f7e7f"
+  end
 
   depends_on "python@3.13"
 
@@ -65,8 +73,8 @@ class Magmascript < Formula
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/34/74/c6428f875774288bec1396f5bfcbc2d925700a4dad61727fd5f2b12f249d/wcwidth-0.8.2.tar.gz"
-    sha256 "91fbef97204b96a3d4d421609b80340b760cf33e26da123ff243d76b1fda8dda"
+    url "https://files.pythonhosted.org/packages/36/57/ed58088fafdf4c55a0ad6bde846502567645424d7ebf325230b9237f4085/wcwidth-0.8.3.tar.gz"
+    sha256 "d128512515fbf4612e0ff21fd6380399210318b7b54a9af59dff8454cf9730eb"
   end
 
   def install
@@ -74,6 +82,11 @@ class Magmascript < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/magmascript --help")
+    # --help prints usage and the domain list, never a version, so it can only
+    # prove the console script runs. Assert the version against the package.
+    assert_match "domain-first subcommands", shell_output("#{bin}/magmascript --help")
+
+    output = shell_output("#{libexec}/bin/python -c 'import magmascript; print(magmascript.__version__)'")
+    assert_match version.to_s, output
   end
 end
