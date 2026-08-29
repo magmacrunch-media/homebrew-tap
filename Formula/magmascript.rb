@@ -2,7 +2,7 @@ class Magmascript < Formula
   include Language::Python::Virtualenv
 
   desc "Scripting toolkit with domain-first subcommands"
-  homepage "https://github.com/magmacrunchmedia/magmascript"
+  homepage "https://magmacrunch.com/ware/magmascript/"
   url "https://files.pythonhosted.org/packages/0c/a7/da106b721fcacc02252bb894cc4ed71576ed095e39a026f2ed00a5971e74/magmascript-3.2.1.tar.gz"
   sha256 "4e440aa7b42c19e3f9881c4ccfa296b106fac476fb14691512189868746fdf55"
   license "MIT"
