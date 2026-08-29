@@ -1,0 +1,115 @@
+# Keeps the formulae level with PyPI.
+#
+# The tap has no way of noticing that a package it packages was released:
+# dependabot here watches github-actions and nothing else. So the formulae only
+# moved when someone remembered, and the gap that opens when nobody does is not
+# academic - magmacrunch sat at 0.1.1 through a release, and texastoast at
+# 0.1.3 for a good deal longer. A stale tap is worse than no tap, because
+# `brew install` succeeds and hands over the wrong version.
+#
+# This does the mechanical half: point each formula at the newest sdist,
+# regenerate its resources, open a pull request. The human half is reviewing it
+# and running `brew pr-pull`, which is where the bottles get attached.
+
+name: Bump formulae from PyPI
+
+on:
+  schedule:
+    # Early enough that a bump is waiting before anyone looks, late enough that
+    # a release published the evening before has settled on PyPI.
+    - cron: "17 6 * * *"
+
+  workflow_dispatch:
+    inputs:
+      formulae:
+        description: Space-separated formula names, or empty for all of them
+        required: false
+        default: ""
+
+  # Lets a release in a package's own repo push the bump rather than waiting up
+  # to a day for the schedule. Nothing sends this yet; the trigger costs
+  # nothing to carry, and wiring it up is one step in a publishing workflow.
+  repository_dispatch:
+    types: [formula-bump]
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@8f3d1ec8a696b3b9d9a6c3696b6c73033cab69e4 # 2026.08.14.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up git
+        uses: Homebrew/actions/git-user-config@8f3d1ec8a696b3b9d9a6c3696b6c73033cab69e4 # 2026.08.14.1
+
+      # setup-homebrew checks this repository out as a tap rather than into the
+      # workspace, so every step below runs from there.
+      - name: Look for new releases
+        id: bump
+        env:
+          FORMULAE: ${{ inputs.formulae }}
+        run: |
+          set -euo pipefail
+          cd "$(brew --repository "$GITHUB_REPOSITORY")"
+          # An array, because shellcheck is right that bare ${FORMULAE} would
+          # glob as readily as it splits. Empty input yields an empty array
+          # and the script then does every formula, which is the default.
+          read -ra names <<< "${FORMULAE}"
+          python3 .github/scripts/pypi_bump.py "${names[@]}"
+
+      # Homebrew's own resolver rather than a second-rate reimplementation of
+      # it. This is also the step that fails loudly when a new release cannot
+      # have its dependency graph resolved at all - better here than in a
+      # bottle build, and far better than in someone's terminal.
+      - name: Regenerate the resource blocks
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          FORMULAE: ${{ steps.bump.outputs.formulae }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          cd "$(brew --repository "$GITHUB_REPOSITORY")"
+          read -ra names <<< "${FORMULAE}"
+          for formula in "${names[@]}"; do
+            brew update-python-resources "${OWNER}/tap/${formula}"
+          done
+
+      # A pull request opened with GITHUB_TOKEN does not start workflow runs,
+      # which here means no bottles are built and the pull request is inert
+      # until a human pokes it. TAP_PR_TOKEN, when set, is a fine-grained PAT
+      # with contents and pull-requests write; with it the loop runs itself.
+      - name: Open the pull request
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.TAP_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.bump.outputs.branch }}
+          TITLE: ${{ steps.bump.outputs.title }}
+          HAS_PAT: ${{ secrets.TAP_PR_TOKEN != '' }}
+        run: |
+          set -euo pipefail
+          cd "$(brew --repository "$GITHUB_REPOSITORY")"
+
+          # Force, because the branch name is a function of the versions found:
+          # a rerun that finds the same releases should update the open pull
+          # request rather than open a second one beside it.
+          git checkout -b "$BRANCH"
+          git commit -am "$TITLE"
+          git push --force origin "$BRANCH"
+
+          if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[]')" ]; then
+            echo "Pull request for $BRANCH already open; updated the branch in place."
+            exit 0
+          fi
+
+          gh pr create --head "$BRANCH" --base main \
+            --title "$TITLE" --body-file .github/BUMP_PR_BODY.md
+
+          if [ "$HAS_PAT" != "true" ]; then
+            echo "::warning::Opened with GITHUB_TOKEN, so CI has not started and no bottles exist. Close and reopen the pull request to build them, or set TAP_PR_TOKEN to make this automatic."
+          fi
