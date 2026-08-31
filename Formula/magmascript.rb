@@ -8,7 +8,7 @@ class Magmascript < Formula
   license "MIT"
 
   bottle do
-    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/magmascript-3.2.1"
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-3.2.1"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ddf2dc3a695cf2a34b3ddf1558774b763622683f9d626bfdd6b3c18fcbaa52d6"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "9f5f7e398de06e67442ee9e95875191d3a9665b037657b6e5a14b0a438e6cbca"
     sha256 cellar: :any_skip_relocation, arm64_linux:   "b6e78b212b02f74d834ebb4091cb4ab0efd9f326248edd49ab1a537949b869f5"
