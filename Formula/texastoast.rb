@@ -8,7 +8,7 @@ class Texastoast < Formula
   license "Apache-2.0"
 
   bottle do
-    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/texastoast-0.11.0"
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/texastoast-0.11.0"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:   "cabbb1b2f24dc87585fea3d39aa8ca0d914e57af937abcf901139f6786acdf66"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "e68dbf475a566c0d2b5467acfc4cdc25bdb851ecae9ee7c4e073ffb1dca7da9e"
     sha256 cellar: :any_skip_relocation, arm64_linux:   "81bbdc0a8c6661ae3e28a26008ce643a86ed7e56ec756c68b2d7a4f87a5c6a20"

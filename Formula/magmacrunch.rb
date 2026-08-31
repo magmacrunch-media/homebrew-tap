@@ -2,7 +2,7 @@ class Magmacrunch < Formula
   include Language::Python::Virtualenv
 
   desc "Terminal arcade - a card grid of every installed cabinet"
-  homepage "https://github.com/magmacrunchmedia/magmacrunch"
+  homepage "https://github.com/magmacrunch-media/magmacrunch"
   url "https://files.pythonhosted.org/packages/c3/cd/5fb99efeeb55600280d2df1802cbae4c014726b521bc1dbd08fde8069462/magmacrunch-0.1.2.tar.gz"
   sha256 "90d88738a6080198b130fef89ef201cde9a58ae2faa7f7ea56022b084004d8e0"
   # Not an open-source licence. The engine underneath (texastoast) is
@@ -11,7 +11,7 @@ class Magmacrunch < Formula
   license "PolyForm-Noncommercial-1.0.0"
 
   bottle do
-    root_url "https://github.com/magmacrunchmedia/homebrew-tap/releases/download/magmacrunch-0.1.2"
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.1.2"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:   "c29400a1b7c3cb038cad24b5dfe4ebb86316e83fabf10e68a29dc6f54ce4dca4"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "0ba6a96f0792f158e89312ebf616f1d1adf779c31973d36bc8caac0f5eef4f1a"
     sha256 cellar: :any_skip_relocation, arm64_linux:   "75ffe56650e6afd5b5ae20d51fe366dc54798e00d8d23a75119f2cf02c4d7cc1"
