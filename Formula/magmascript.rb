@@ -3,23 +3,15 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://magmacrunch.com/ware/magmascript/"
-  url "https://files.pythonhosted.org/packages/0c/a7/da106b721fcacc02252bb894cc4ed71576ed095e39a026f2ed00a5971e74/magmascript-3.2.1.tar.gz"
-  sha256 "4e440aa7b42c19e3f9881c4ccfa296b106fac476fb14691512189868746fdf55"
+  url "https://files.pythonhosted.org/packages/02/88/0b183186ea885b85759797586a21d18b59787c9a76a3d75b35bb17323962/magmascript-3.2.3.tar.gz"
+  sha256 "1926bd90fc661dfb56db09d029c98fdfaed2907f2e6f9058dcce6488c1bfeb58"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-3.2.1"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "ddf2dc3a695cf2a34b3ddf1558774b763622683f9d626bfdd6b3c18fcbaa52d6"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9f5f7e398de06e67442ee9e95875191d3a9665b037657b6e5a14b0a438e6cbca"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b6e78b212b02f74d834ebb4091cb4ab0efd9f326248edd49ab1a537949b869f5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "66af049350de84a30787ba61762963b5f53f138e1ce16bfd7f5ed26d844f7e7f"
-  end
 
   depends_on "python@3.13"
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/61/cc/a381afa6efea9f496eff839d4a6a1aed3bfafc7b3ab4b0d1b243a12573dd/anyio-4.14.2.tar.gz"
-    sha256 "cfa139f3ed1a23ee8f88a145ddb5ac7605b8bbfd8592baacd7ce3d8bb4313c7f"
+    url "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz"
+    sha256 "9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94"
   end
 
   resource "certifi" do
@@ -47,34 +39,9 @@ class Magmascript < Formula
     sha256 "5e0811a4383b21dc5838069f801c4fb62113b7447663d2530d2bd6e77b49bf15"
   end
 
-  resource "markdown-it-py" do
-    url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
-    sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
-  end
-
-  resource "mdurl" do
-    url "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz"
-    sha256 "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
-  end
-
-  resource "prompt-toolkit" do
-    url "https://files.pythonhosted.org/packages/7d/ea/39b988c938f75cb75d7045b5c69f8bfed47ee2152c8837fb403de29d6fb8/prompt_toolkit-3.0.53.tar.gz"
-    sha256 "9ec8a0ad96d5c56148b3f914aa79c1564c3fde5d2e6b876e7bc327e353cf8fa6"
-  end
-
-  resource "pygments" do
-    url "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz"
-    sha256 "610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"
-  end
-
-  resource "rich" do
-    url "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz"
-    sha256 "edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36"
-  end
-
-  resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/36/57/ed58088fafdf4c55a0ad6bde846502567645424d7ebf325230b9237f4085/wcwidth-0.8.3.tar.gz"
-    sha256 "d128512515fbf4612e0ff21fd6380399210318b7b54a9af59dff8454cf9730eb"
+  resource "typing-extensions" do
+    url "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz"
+    sha256 "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
   end
 
   def install
