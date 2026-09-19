@@ -3,41 +3,38 @@ class Magmacrunch < Formula
 
   desc "Terminal arcade - a card grid of every installed cabinet"
   homepage "https://github.com/magmacrunch-media/magmacrunch"
-  url "https://files.pythonhosted.org/packages/c3/cd/5fb99efeeb55600280d2df1802cbae4c014726b521bc1dbd08fde8069462/magmacrunch-0.1.2.tar.gz"
-  sha256 "90d88738a6080198b130fef89ef201cde9a58ae2faa7f7ea56022b084004d8e0"
+  url "https://files.pythonhosted.org/packages/68/5b/1b29464760f44098546c3f67addf8ae9fa23becc9af0e803bee4f186b125/magmacrunch-0.8.0.tar.gz"
+  sha256 "afd50437c01be186e05bba74a9edc4763ef84a6d9e92941945332c9a7687955e"
   # Not an open-source licence. The engine underneath (texastoast) is
   # Apache-2.0; the arcade and the games it seats are not, and a package cannot
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
 
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.1.2"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "c29400a1b7c3cb038cad24b5dfe4ebb86316e83fabf10e68a29dc6f54ce4dca4"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0ba6a96f0792f158e89312ebf616f1d1adf779c31973d36bc8caac0f5eef4f1a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "75ffe56650e6afd5b5ae20d51fe366dc54798e00d8d23a75119f2cf02c4d7cc1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9ae5d8d81c0b2a2407620a994eb0c018b7fd076728f7800ee6734b0d0a443085"
-  end
-
   depends_on "python@3.12"
 
   resource "linkify-it-py" do
-    url "https://files.pythonhosted.org/packages/53/3e/79f35b8c31a1881893b7e62be80b2573f06e38db47c33065749293ee1b97/linkify_it_py-2.1.1.tar.gz"
-    sha256 "a78f40fee177eb912e9d2375074108378523c38d3fde5d3ee804f465b6cfbfee"
+    url "https://files.pythonhosted.org/packages/45/98/7a1a5f31fd5c7ba93e963b168e244b8e3dd705b3d2a718e3c3307583bf57/linkify_it_py-2.2.0.tar.gz"
+    sha256 "907acd2d17ac1fbb9ddb62c8957ccbd6158cac602231a15c3b0cd1e215f03cee"
   end
 
   resource "magmacrunch-george-boole" do
-    url "https://files.pythonhosted.org/packages/64/46/f92f5b998eb6e408243923c24c33066ac365242f29e9430d08abd21afd8e/magmacrunch_george_boole-0.2.0.tar.gz"
-    sha256 "04017151823f24a8637907e20421d278539e7c7a93ac2677f0a74306ab7ad9e8"
+    url "https://files.pythonhosted.org/packages/37/f1/b3e28d8d972778e0aab776602892a6c81ec372b414def576fe9afe76b4d3/magmacrunch_george_boole-0.5.1.tar.gz"
+    sha256 "c8f15f86915f3fcf7e68c49646ed47b161fe14104d5025977734b2a6894486cb"
+  end
+
+  resource "magmacrunch-jhc" do
+    url "https://files.pythonhosted.org/packages/61/0c/6d07952f1d93736648154c7f899d19628adb4e29bd990ca3a960d4170fd4/magmacrunch_jhc-0.1.0.tar.gz"
+    sha256 "ee6cd8c30b49c9913cf61514ce1578405331d4cb4b570a07b0013ea5c06d47e2"
   end
 
   resource "magmacrunch-moonlight-drift" do
-    url "https://files.pythonhosted.org/packages/11/2a/20b678978feebb45c134cc644c7a41abeeb0821bb75a2928c7f81d131c18/magmacrunch_moonlight_drift-0.2.0.tar.gz"
-    sha256 "4b5debae20bb750064ffb9307d6d6c6942574bb21dd0ced608ee540d0110a8a6"
+    url "https://files.pythonhosted.org/packages/a0/59/ec5e3e2a9bd5367d82bf47ec22075758273f723f8f84b7fb213e55537b6c/magmacrunch_moonlight_drift-0.5.0.tar.gz"
+    sha256 "e1d4e0d7f46e064180968109903b8cc89949171a0a4d50750caac69283931cdf"
   end
 
   resource "magmacrunch-thld" do
-    url "https://files.pythonhosted.org/packages/9d/86/397c20837e8b9e8c5496a9bdfd37e8a477b7ce2e158ccb78dbcfb5d76c77/magmacrunch_thld-0.1.1.tar.gz"
-    sha256 "4bcbce45bde60e80d22f4c9a093e25f976d4bf84d4e050cb8f9281b2cc1be576"
+    url "https://files.pythonhosted.org/packages/26/50/aa163db1adff8166b535809998cde910e81db2eeee35da009d5b6e52e34d/magmacrunch_thld-0.5.0.tar.gz"
+    sha256 "a11dad495326436c152c3d19e51ca4beab6f092d88c7e66a24cfa8811be24cd9"
   end
 
   resource "markdown-it-py" do
@@ -56,11 +53,11 @@ class Magmacrunch < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/ea/06/cf1564dcc2e2261c8c8c6c05628dc8b418943bdae2a4e58640ceb2f770fa/platformdirs-4.11.5.tar.gz"
-    sha256 "e8b31f4f8bcbbedef91a6b57a706255e4f148d2a4e01648382a0a47342539173"
+    url "https://files.pythonhosted.org/packages/89/24/92d90bebedf197eb15b144367ce6fd4ad2de571927cd09dde190a36db8fc/platformdirs-4.11.10.tar.gz"
+    sha256 "9cd351c078ccf7dda1fdc5f8ccb9d8f5258984c63990e6df3627dde0b70b51d0"
   end
 
-  resource "Pygments" do
+  resource "pygments" do
     url "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz"
     sha256 "610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"
   end
@@ -68,11 +65,6 @@ class Magmacrunch < Formula
   resource "rich" do
     url "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz"
     sha256 "edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36"
-  end
-
-  resource "texastoast" do
-    url "https://files.pythonhosted.org/packages/32/c3/a1cd1cb1f0a3c95f3f20cf8a7ae661107b605b3bbdfeaad39558d3448662/texastoast-0.11.0.tar.gz"
-    sha256 "0af1ce24da3092c5c8ffa402bd110450fb0cc0f977a5c3f892745e2fd37258ef"
   end
 
   resource "textual" do
@@ -83,11 +75,6 @@ class Magmacrunch < Formula
   resource "typing-extensions" do
     url "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz"
     sha256 "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
-  end
-
-  resource "uc-micro-py" do
-    url "https://files.pythonhosted.org/packages/78/67/9a363818028526e2d4579334460df777115bdec1bb77c08f9db88f6389f2/uc_micro_py-2.0.0.tar.gz"
-    sha256 "c53691e495c8db60e16ffc4861a35469b0ba0821fe409a8a7a0a71864d33a811"
   end
 
   def install
