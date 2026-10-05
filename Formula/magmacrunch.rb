@@ -10,6 +10,14 @@ class Magmacrunch < Formula
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
 
+  bottle do
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.8.0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "b3958f7d7c099fa76c559f80979cd9bd57dab902923de258ed9007e772f50bdf"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b238b79ccaf4925381964b1d60ec82617fcc1debb25566b35d233b1cd198ec8e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "0a488b9b0c584782b1768c41bf84119f37854df0f4ed2634700c3bfd978b704e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a4859dbfdc2c7624209086dcfc094e6dd6043c0559c0b6898d88f221fecfc9d3"
+  end
+
   depends_on "python@3.12"
 
   resource "linkify-it-py" do
