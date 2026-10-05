@@ -80,17 +80,86 @@ jobs:
             brew update-python-resources "${OWNER}/tap/${formula}"
           done
 
-      # A pull request opened with GITHUB_TOKEN does not start workflow runs,
-      # which here means no bottles are built and the pull request is inert
-      # until a human pokes it. TAP_PR_TOKEN, when set, is a fine-grained PAT
-      # with contents and pull-requests write; with it the loop runs itself.
+      # GITHUB_TOKEN cannot open this pull request, and could not have done
+      # anything useful if it had. Both halves are worth stating, because
+      # fixing only the one that shows in the log leaves the other.
+      #
+      # It cannot: the organisation has "Allow GitHub Actions to create and
+      # approve pull requests" off, so createPullRequest is refused outright.
+      # Every scheduled run from 2026-08-29 to 2026-10-05 therefore pushed its
+      # branch, failed this one call, and left the branch behind - seven
+      # abandoned bump/ branches and not a single pull request, while the
+      # formulae drifted seven releases behind PyPI. Check it with
+      #   gh api orgs/magmacrunch-media/actions/permissions/workflow
+      # where can_approve_pull_request_reviews is the flag, and note it is set
+      # per-repository as well, so both have to allow it.
+      #
+      # And it could not: a pull request opened with GITHUB_TOKEN starts no
+      # workflow runs, so tests.yml would never fire, no bottles would be built
+      # and `brew pr-pull` would have nothing to attach. Flipping the flag
+      # alone buys an inert pull request needing a manual close-and-reopen.
+      #
+      # An App installation token is subject to neither limit. It also expires
+      # with the run, which a PAT does not: TAP_PR_TOKEN was the alternative
+      # written here first, and a fine-grained PAT is scoped to selected
+      # repositories under an owner, so renaming the owner silently drops the
+      # selection and the token 403s while still authenticating. That has
+      # already happened twice in this organisation.
+      #
+      # RELEASE_APP_ID and RELEASE_APP_PRIVATE_KEY are organisation secrets at
+      # visibility `all`, so there is no per-repo copy here to go stale, and
+      # the App is installed on this repository with contents and pull-requests
+      # write.
+      - name: Check the App credentials are present and parseable
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          APP_ID: ${{ secrets.RELEASE_APP_ID }}
+          APP_KEY: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_ID" ] || [ -z "$APP_KEY" ]; then
+            echo "::error::RELEASE_APP_ID / RELEASE_APP_PRIVATE_KEY are not visible to this repository."
+            echo "They are organization secrets on magmacrunch-media at visibility 'all'. Check with"
+            echo "  gh api orgs/magmacrunch-media/actions/secrets"
+            echo "and note a repo-level copy of the same name would TAKE PRECEDENCE over the org one:"
+            echo "  gh secret list -R magmacrunch-media/homebrew-tap"
+            exit 1
+          fi
+          # An emptiness check is not enough. The org private key has been
+          # stored three times as a bare PEM body with its -----BEGIN and
+          # -----END lines stripped off by the web form, which is accepted,
+          # stored, and then dies in the mint step below as "DOMException
+          # [DataError]: Invalid keyData" inside a Node stack trace that names
+          # neither the secret nor the paste. magmacrunch.com's backup ran
+          # broken for 27 days on exactly that while an emptiness-only check
+          # passed every single run.
+          case "$APP_KEY" in
+            "-----BEGIN "*"-----END "*) ;;
+            *)
+              echo "::error::RELEASE_APP_PRIVATE_KEY is set but is not a PEM: no -----BEGIN/-----END armour."
+              echo "A malformed value, not a missing one, and almost certainly a PEM body pasted into"
+              echo "the web form without its armour lines. Re-set it from the file, never by paste:"
+              echo "  gh secret set RELEASE_APP_PRIVATE_KEY --org magmacrunch-media --visibility all < key.pem"
+              echo "PowerShell has no < redirection; use Get-Content key.pem -Raw | gh secret set ..."
+              exit 1
+              ;;
+          esac
+
+      - name: Mint a short-lived token
+        id: app-token
+        if: steps.bump.outputs.changed == 'true'
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          owner: magmacrunch-media
+          repositories: homebrew-tap
+
       - name: Open the pull request
         if: steps.bump.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.TAP_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ steps.bump.outputs.branch }}
           TITLE: ${{ steps.bump.outputs.title }}
-          HAS_PAT: ${{ secrets.TAP_PR_TOKEN != '' }}
         run: |
           set -euo pipefail
           cd "$(brew --repository "$GITHUB_REPOSITORY")"
@@ -137,6 +206,12 @@ jobs:
           gh pr create --head "$BRANCH" --base main \
             --title "$TITLE" --body-file .github/BUMP_PR_BODY.md
 
-          if [ "$HAS_PAT" != "true" ]; then
-            echo "::warning::Opened with GITHUB_TOKEN, so CI has not started and no bottles exist. Close and reopen the pull request to build them, or set TAP_PR_TOKEN to make this automatic."
-          fi
+          # Opened by the App, so tests.yml has started and will build the
+          # bottles. Attaching them is still deliberate rather than automatic:
+          # run publish.yml with this pull request's number, which is
+          # `brew pr-pull` and lands the formula on main with its bottle block
+          # filled in. Merging the branch by hand instead is the one thing not
+          # to do - the bump strips the old bottle block and the new version
+          # has none yet, so a plain merge publishes a formula that sends every
+          # user down a source build.
+          echo "::notice::Opened by the magmacrunch-release App, so bottle CI has started. When it is green, run the 'brew pr-pull' workflow with this pull request number to land it. Do not merge the branch by hand: it carries no bottles."
