@@ -44,3 +44,59 @@ jobs:
         uses: Homebrew/actions/git-try-push@8f3d1ec8a696b3b9d9a6c3696b6c73033cab69e4 # 2026.08.14.1
         with:
           branch: main
+
+      # brew pr-pull closes the pull request and leaves its branch behind, and
+      # that residue is what this tap had to be dug out of: seven abandoned
+      # bump/ branches, every one a spent bump whose formula had already
+      # landed. They are not merely untidy. Each is stale in the dangerous
+      # direction, because main carries the BOTTLED formula while the leftover
+      # branch still holds the unbottled one, so merging a stray branch
+      # publishes a formula with no bottle block and sends every user on every
+      # platform down a source build. One of them had already decayed into a
+      # pure bottle-deletion diff against main by the time anyone looked.
+      #
+      # This step runs only when "Push commits" above succeeded. That ordering
+      # is the safety property, not a convenience: until the push lands, the
+      # branch is the only place the bottle-bearing commit exists, so deleting
+      # it after a failed pr-pull would destroy the very thing a retry needs.
+      # A step carrying no `if:` is implicitly `if: success()`, so any failure
+      # above skips this rather than running it.
+      - name: Delete the landed bump branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST: ${{ inputs.pull_request }}
+        run: |
+          set -euo pipefail
+
+          info=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" \
+            --jq '[.head.ref, .head.repo.full_name // "", .state] | @tsv')
+          branch=$(printf '%s' "$info" | cut -f1)
+          head_repo=$(printf '%s' "$info" | cut -f2)
+          state=$(printf '%s' "$info" | cut -f3)
+
+          # A fork's branch is not ours to remove, and the token cannot do it
+          # anyway. Report rather than fail: the bottles still landed.
+          if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::Head branch '$branch' lives in '${head_repo:-a deleted fork}', not in this repository. Leaving it alone."
+            exit 0
+          fi
+
+          # pr-pull closes the pull request as part of landing it. Still open
+          # means the landing did not complete the way this step assumes, so
+          # the branch is worth keeping and worth a human looking at.
+          if [ "$state" != "closed" ]; then
+            echo "::warning::Pull request #$PULL_REQUEST is still '$state' after a successful push, which is not what a completed pr-pull looks like. Keeping branch '$branch'."
+            exit 0
+          fi
+
+          # Belt and braces. git-try-push above targets main, so a branch name
+          # equal to the default branch would mean something has gone very
+          # wrong, and deleting it would be unrecoverable from here.
+          default=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.default_branch')
+          if [ "$branch" = "$default" ]; then
+            echo "::error::Refusing to delete '$branch': it is this repository's default branch."
+            exit 1
+          fi
+
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch" --silent
+          echo "::notice::Deleted '$branch'; its bump is on $default with bottles attached."
