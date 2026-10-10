@@ -48,9 +48,12 @@ and you can skip straight to `brew install`.
 
 | Formula | Description |
 |---------|-------------|
-| [`texastoast`](https://github.com/magmacrunch-media/texastoast) | Python RPG engine with I2C hardware abstraction for magmacrunch game systems |
-| [`magmacrunch`](https://github.com/magmacrunch-media/magmacrunch) | Terminal arcade - a card grid of every installed cabinet |
-| [`magmascript`](https://github.com/magmacrunch-media/magmascript) | Scripting toolkit with domain-first subcommands |
+| [`texastoast`](https://magmacrunch.com/ware/texastoast/) | Python RPG engine with I2C hardware abstraction for magmacrunch game systems |
+| [`magmacrunch`](https://magmacrunch.com/arcade/terminal.html) | Terminal arcade - a card grid of every installed cabinet |
+| [`magmascript`](https://magmacrunch.com/ware/magmascript/) | Scripting toolkit with domain-first subcommands |
+
+Each formula links to that tool's page on magmacrunch.com, which is where its
+documentation lives.
 
 ## Documentation
 
