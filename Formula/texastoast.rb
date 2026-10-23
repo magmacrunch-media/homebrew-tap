@@ -3,8 +3,8 @@ class Texastoast < Formula
 
   desc "Python RPG engine with I2C hardware abstraction for magmacrunch game systems"
   homepage "https://github.com/magmacrunch-media/texastoast"
-  url "https://files.pythonhosted.org/packages/48/28/53d4c8e3c5dac834dd05081e7a1d8f3b69f935d117ce523ee61e1fb20d2c/texastoast-0.12.0.tar.gz"
-  sha256 "c34e2d7648550818774e017809e8ecba58ae7c1c66b74363fe74fad91f753567"
+  url "https://files.pythonhosted.org/packages/42/98/5f505a9b0f287b2d0e2a7c67258f583179c36cd35cc74f49f00e4e3a7a40/texastoast-0.12.2.tar.gz"
+  sha256 "9d13b847803b77ae8c67c4ccdb2a537f90c6be2b9801805f97c5ada4fa38edb6"
   license "Apache-2.0"
 
   depends_on "python@3.12"
