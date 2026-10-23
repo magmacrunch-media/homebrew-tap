@@ -68,11 +68,20 @@ jobs:
         run: |
           set -euo pipefail
 
-          info=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" \
-            --jq '[.head.ref, .head.repo.full_name // "", .state] | @tsv')
+          # GitHub closes the pull request ASYNCHRONOUSLY, a few seconds after
+          # the push whose commit message names it. Read once, straight after
+          # the push, it can still say "open": that happened on #12 on
+          # 2026-10-22, and the branch had to be deleted by hand. So poll for
+          # up to a minute before treating "open" as a real anomaly.
+          for attempt in $(seq 1 12); do
+            info=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" \
+              --jq '[.head.ref, .head.repo.full_name // "", .state] | @tsv')
+            state=$(printf '%s' "$info" | cut -f3)
+            [ "$state" = "closed" ] && break
+            sleep 5
+          done
           branch=$(printf '%s' "$info" | cut -f1)
           head_repo=$(printf '%s' "$info" | cut -f2)
-          state=$(printf '%s' "$info" | cut -f3)
 
           # A fork's branch is not ours to remove, and the token cannot do it
           # anyway. Report rather than fail: the bottles still landed.
@@ -85,7 +94,7 @@ jobs:
           # means the landing did not complete the way this step assumes, so
           # the branch is worth keeping and worth a human looking at.
           if [ "$state" != "closed" ]; then
-            echo "::warning::Pull request #$PULL_REQUEST is still '$state' after a successful push, which is not what a completed pr-pull looks like. Keeping branch '$branch'."
+            echo "::warning::Pull request #$PULL_REQUEST is still '$state' a minute after a successful push, which is not what a completed pr-pull looks like. Keeping branch '$branch'."
             exit 0
           fi
 
