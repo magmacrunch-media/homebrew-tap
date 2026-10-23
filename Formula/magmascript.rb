@@ -3,17 +3,9 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://magmacrunch.com/ware/magmascript/"
-  url "https://files.pythonhosted.org/packages/d3/c8/9c2442370a15036a202dd2f56835b255ee0e9f28ca1650f1f44e9589d9f3/magmascript-4.0.0.tar.gz"
-  sha256 "15d0a8c2fdcd125439397e2f5cf2f1e7bbcf252c9dceec246d95554395c000e2"
+  url "https://files.pythonhosted.org/packages/fa/2d/8e445ae6342492cce7cff9284a3dd7c8dfee867af3fb107345eb936be4fe/magmascript-4.0.1.tar.gz"
+  sha256 "e7c110a8b834718931603cb8b6e25d9119061363a20960860321c89c8d56d1ad"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-4.0.0"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "1e0f6d4b0c04ac8d1225b1a1b816d42797d094519d1557621987e4f2796b461e"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a5fdc8c107d15135cfe5cda6d8a28974a6da0c05bad8c2f6f63f692e6e433dc9"
-    sha256 cellar: :any,                 arm64_linux:   "94655be2cc5bdb73e4534f4fc22707776c24ffb670fd07e57c73cf8698e4194c"
-    sha256 cellar: :any,                 x86_64_linux:  "1483b9167251201f1068312000ae6831123bec7480567408aee19a31eab95fba"
-  end
 
   depends_on "python@3.13"
 
