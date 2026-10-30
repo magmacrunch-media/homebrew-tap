@@ -7,6 +7,14 @@ class Magmascript < Formula
   sha256 "cc2ac786dd0fb361f643722708742f6c2da60646efcd00091252c1df9baa5dbe"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-4.1.0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8f341663a8dc1a4ddf367b1a0acf70571f17c32ba5ac4b38ba0edd89a0c6a91d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ca6ac7672c4bc168dc2cc689c41b68e2b9d2d76e868c73f5dc515f25028e5814"
+    sha256 cellar: :any,                 arm64_linux:   "7d66b9eb8be19e251222738e92d09f6224011a53eb941f6e0436f3829cdbdad0"
+    sha256 cellar: :any,                 x86_64_linux:  "4fc65ab0da2a94acca38f3164edd4865dea942b10fc82a248b99fe4472ef2e02"
+  end
+
   depends_on "python@3.13"
 
   resource "anyio" do
