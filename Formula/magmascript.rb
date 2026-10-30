@@ -3,17 +3,9 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://magmacrunch.com/ware/magmascript/"
-  url "https://files.pythonhosted.org/packages/fa/2d/8e445ae6342492cce7cff9284a3dd7c8dfee867af3fb107345eb936be4fe/magmascript-4.0.1.tar.gz"
-  sha256 "e7c110a8b834718931603cb8b6e25d9119061363a20960860321c89c8d56d1ad"
+  url "https://files.pythonhosted.org/packages/bf/76/21e9e6127e588362938af12032439658daa2baa7c4cb55317cbaab64bd47/magmascript-4.1.0.tar.gz"
+  sha256 "cc2ac786dd0fb361f643722708742f6c2da60646efcd00091252c1df9baa5dbe"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-4.0.1"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "0529b0d17a40d1fef982ded4d4fc335015f1e7d1107900f672c785dba0ac1843"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d94e9ec872bce4fb4f8bf518fedde7d496bfcf6868cb9f558893c0c3eeb7ce6b"
-    sha256 cellar: :any,                 arm64_linux:   "f521797653bd23d74c31cc1250d13fa4af9c023a1fff693bb4b404e979109f39"
-    sha256 cellar: :any,                 x86_64_linux:  "86041265f7b74d12b69a3ee3e71760d750569611d7d261ae8e5690de6f92380b"
-  end
 
   depends_on "python@3.13"
 
@@ -23,8 +15,8 @@ class Magmascript < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/a6/bd/1436c50cc46699de0230fbaacc1d1de7bfec413176099949e9d5112e88f2/certifi-2026.10.19.tar.gz"
-    sha256 "035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae"
+    url "https://files.pythonhosted.org/packages/fd/11/b524cbd9bbdaca58608e4cf4053fd463417549e1959fa8d3aa18319f9555/certifi-2026.10.23.tar.gz"
+    sha256 "a9895e6e2758b371e0545e321a3a8fd1fcfd9829ada8824a936dfb16aaaf36cd"
   end
 
   resource "h11" do
@@ -78,8 +70,8 @@ class Magmascript < Formula
   end
 
   resource "wcwidth" do
-    url "https://files.pythonhosted.org/packages/69/4a/82d61476a1ccc20d43d0805724c5de4baa4971131a8db1816705ef53fe16/wcwidth-0.9.3.tar.gz"
-    sha256 "dfe7cfbd4cb59db9fe0931bd6091ab4a95b3acc5d56bfb50fa9fef0ccba5dc5c"
+    url "https://files.pythonhosted.org/packages/ea/01/e5ac23733628a6bbb91913a765fcf55ee8070d8d991bc88fdaaf805052c7/wcwidth-0.9.4.tar.gz"
+    sha256 "fd8d57d3cdfe570e3265c8fab1885c24e34ef40889c0759c0c304a19e9835954"
   end
 
   def install
