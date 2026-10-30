@@ -73,7 +73,7 @@ jobs:
           # the push, it can still say "open": that happened on #12 on
           # 2026-10-22, and the branch had to be deleted by hand. So poll for
           # up to a minute before treating "open" as a real anomaly.
-          for attempt in $(seq 1 12); do
+          for _ in $(seq 1 12); do
             info=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" \
               --jq '[.head.ref, .head.repo.full_name // "", .state] | @tsv')
             state=$(printf '%s' "$info" | cut -f3)
