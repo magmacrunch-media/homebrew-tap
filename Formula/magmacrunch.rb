@@ -3,20 +3,12 @@ class Magmacrunch < Formula
 
   desc "Terminal arcade - a card grid of every installed cabinet"
   homepage "https://github.com/magmacrunch-media/magmacrunch"
-  url "https://files.pythonhosted.org/packages/b3/b9/77fead1c28d9afd82790b01e1b43c3b576ad325fea516ea17ca9f10357cd/magmacrunch-0.18.0.tar.gz"
-  sha256 "fccbfdbb57c3f9ae09054c1a036d9cc4f1f1ede0f93b79eb11f8a0d361d2660a"
+  url "https://files.pythonhosted.org/packages/f1/68/494b649f67568fdd0a3e2561d6b00d340c0635639d70c91aa44380ecec34/magmacrunch-0.19.3.tar.gz"
+  sha256 "3abaf414e6c1a3093f33cd356d1f178ce05a2e3e70eae751aad7ebfe6d531549"
   # Not an open-source licence. The engine underneath (texastoast) is
   # Apache-2.0; the arcade and the games it seats are not, and a package cannot
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.18.0"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "87e7b0be86a6300faa3637bb846e0f05b8148e27da7050ea99da189f6d78382f"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9e602210d4bdd57d78d068f5f782f6ad607156e53df5ee8b251e111e8adab69c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "dcee90ba5bcd54fab426512205b3b2cd2823ed735125f3b04998c79c45ac940b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dbe1981a9059dba34ca77c3a257c5fbe054be9a555583f948d704d43265ce194"
-  end
 
   depends_on "python@3.12"
 
@@ -61,8 +53,8 @@ class Magmacrunch < Formula
   end
 
   resource "magmacrunch-george-boole" do
-    url "https://files.pythonhosted.org/packages/86/5e/4c8789cbddb0654de43d6a5ff6950886e969dbcecec494ffc0169a8cd378/magmacrunch_george_boole-0.5.5.tar.gz"
-    sha256 "9e986be5768f9dd038c2f21d2e797b0510d43813d78b273dba5daa3c47860ea9"
+    url "https://files.pythonhosted.org/packages/20/bb/177f09793871caca180dc43c7f5d8e9a44f004e383542b1ace11f172e0c9/magmacrunch_george_boole-0.5.6.tar.gz"
+    sha256 "a9ac5275d2c548fea2fd38dc0e50e48ffd0c95f7f5e2ff2b323cd343786fd916"
   end
 
   resource "magmacrunch-jhc" do
@@ -131,8 +123,8 @@ class Magmacrunch < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/35/e9/bf409046a91b6a9ca652e9b0ac3c39481674f6774e23e58b52315516099a/platformdirs-4.13.7.tar.gz"
-    sha256 "f7f351c027d6632c30471124e1fdb6ac0fef9ccc5cbac1b34cb333431b1fc3e1"
+    url "https://files.pythonhosted.org/packages/d7/9a/8475be631fb33ca1466915e70fd594c42a4e84b512db650eaa14f90fe75d/platformdirs-4.14.5.tar.gz"
+    sha256 "32e9921db7385aa8169bee4fe9501923e5715ba9fb7ea3b9c69b0d8e0639f7a1"
   end
 
   resource "pygments" do
