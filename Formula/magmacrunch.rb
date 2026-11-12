@@ -3,20 +3,12 @@ class Magmacrunch < Formula
 
   desc "Terminal arcade - a card grid of every installed cabinet"
   homepage "https://github.com/magmacrunch-media/magmacrunch"
-  url "https://files.pythonhosted.org/packages/f1/68/494b649f67568fdd0a3e2561d6b00d340c0635639d70c91aa44380ecec34/magmacrunch-0.19.3.tar.gz"
-  sha256 "3abaf414e6c1a3093f33cd356d1f178ce05a2e3e70eae751aad7ebfe6d531549"
+  url "https://files.pythonhosted.org/packages/f0/ea/01ccb80d8193abe2cec03c686e9428a0bdb82168aa9a33625a80e2b53291/magmacrunch-0.19.4.tar.gz"
+  sha256 "2deacd33092712b65ed36c5f83eebc31259a94dca6de7edba627d234083eea88"
   # Not an open-source licence. The engine underneath (texastoast) is
   # Apache-2.0; the arcade and the games it seats are not, and a package cannot
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.19.3"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "971dad2c9b26a6fa0eb593afcabbde6f06b8b0ad30f5ffe07a8faff6df13933b"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "80dba322b067d29445ff8830e57b0ad27c9888e1c02ba31478d763bd3656873a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f7e20f026439aed3fdecafb1771bc80353b171d83204a17985bc9eac8da52443"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ee734435b685c33bbb22f1bff5fc4e0c08ee960eeb56efc963cb6462cce46c34"
-  end
 
   depends_on "python@3.12"
 
@@ -26,8 +18,8 @@ class Magmacrunch < Formula
   end
 
   resource "magmacrunch-backgammon" do
-    url "https://files.pythonhosted.org/packages/0d/46/36e5570f6de39cb75ea15c499d279c89f317291411ae23d38675691de566/magmacrunch_backgammon-0.1.2.tar.gz"
-    sha256 "ea9b34ad2966f899d265b2789a5fada62046b6daba119f5f5afb3685b3816930"
+    url "https://files.pythonhosted.org/packages/37/4e/2850f6f2bea779e3f2cdaad072360125dc4a2efbd2f651f4200dad9ec471/magmacrunch_backgammon-0.1.3.tar.gz"
+    sha256 "46d4bddd52dbd40736c4eabfa7ab4eefc0b9dbaf979fc525c5cbf35adcdd9c8b"
   end
 
   resource "magmacrunch-caldera" do
@@ -36,33 +28,33 @@ class Magmacrunch < Formula
   end
 
   resource "magmacrunch-checkers" do
-    url "https://files.pythonhosted.org/packages/8a/81/a1e9ce0dafcaad6d25f4f7ee4a0a94ff49f1d946d7267c7bd21231411466/magmacrunch_checkers-0.1.2.tar.gz"
-    sha256 "a44d8cd937807c2963eab66e89c5576b5c8e7cb13cb0db6172359234f43a99c3"
+    url "https://files.pythonhosted.org/packages/c9/6d/50ed245da658d9bf0cb3ea52d10e0f040d984dce174d2ea5054427d06fc4/magmacrunch_checkers-0.1.3.tar.gz"
+    sha256 "61c81cebcc3b576e7da6f9af8a701c7b830b2a2055594d03e03bc5c117ee3c03"
   end
 
   resource "magmacrunch-chess" do
-    url "https://files.pythonhosted.org/packages/cc/bd/85d48baf948d53a0884605d7a129300fdd5f904e79d575d4045e2bc4d5e4/magmacrunch_chess-0.1.3.tar.gz"
-    sha256 "feb939714b62479375b834c48bec26124d627af18bd8607ebbe61f58eb406980"
+    url "https://files.pythonhosted.org/packages/57/0c/339519e546650a523dcf179891a56ba3dff0fa08c1b6db568755df22adf4/magmacrunch_chess-0.1.4.tar.gz"
+    sha256 "9aafab9bf9262417ba0f4c2bbd5e451cd8bc13a1a43242ae3245bb2a8265ac59"
   end
 
   resource "magmacrunch-chinese-checkers" do
-    url "https://files.pythonhosted.org/packages/01/35/eb9eaa4d389ec09004f6e48587a4b6cf6dca649fea4fb84613911012bfc2/magmacrunch_chinese_checkers-0.1.2.tar.gz"
-    sha256 "0c04d8e3d3f4a3f51e8e753c9fca0638c21077309478726dac4649d8b3e5e950"
+    url "https://files.pythonhosted.org/packages/d5/ba/4319240f4b6affcad319abaff15ab23eddbb99f0617c55c359d6660e0073/magmacrunch_chinese_checkers-0.1.3.tar.gz"
+    sha256 "adcb052ca5e6e9b178ac41704811055f1d5e43ac4af7bbd271652812b96eeefa"
   end
 
   resource "magmacrunch-cribbage" do
-    url "https://files.pythonhosted.org/packages/a4/0e/b34c786bf4273f852d46ae58b8733d9431ebc9e2f1cca416637ab3639d8c/magmacrunch_cribbage-0.1.2.tar.gz"
-    sha256 "8ee0ce1ec953186101015f359c89f6365dbee534a7deee717bb0d493ae83bb26"
+    url "https://files.pythonhosted.org/packages/77/42/c8ce9c8c5bd2d9dc2a39f32931d2f56840cc8ea9d64d53d445b2e1a8f38f/magmacrunch_cribbage-0.1.3.tar.gz"
+    sha256 "8d70d568081071637e9fd56060d1ae10627bcbc4806ba1084af5ac1a18583ef1"
   end
 
   resource "magmacrunch-fifteen-puzzle" do
-    url "https://files.pythonhosted.org/packages/5e/b4/7a60606fba5e654f75ec049fc99cd8fc0028b4b6b799eb9f2a5fb95f530d/magmacrunch_fifteen_puzzle-0.1.2.tar.gz"
-    sha256 "188e2b7273b4a483eeecb1dadc2554e82f6fc73c2729accdd2c49f0aefdffba6"
+    url "https://files.pythonhosted.org/packages/ee/b5/4daca33bab1db3529f834ca8f35b9ccb46d1c62497416f128907c8f74d5f/magmacrunch_fifteen_puzzle-0.1.3.tar.gz"
+    sha256 "efb702b632add90c97b5d116f3311a6bbd1c5f66d86a314b0d443ca09da22848"
   end
 
   resource "magmacrunch-george-boole" do
-    url "https://files.pythonhosted.org/packages/20/bb/177f09793871caca180dc43c7f5d8e9a44f004e383542b1ace11f172e0c9/magmacrunch_george_boole-0.5.6.tar.gz"
-    sha256 "a9ac5275d2c548fea2fd38dc0e50e48ffd0c95f7f5e2ff2b323cd343786fd916"
+    url "https://files.pythonhosted.org/packages/af/75/78fb9dbd9621a8111ddb9e7b53bf88963a4f3926f03c88cbfc9986bc77f3/magmacrunch_george_boole-0.5.7.tar.gz"
+    sha256 "0b16c3c38502e2f31b73ca6cf97650e2e8084e7b7e113cf9344dabaf035daf76"
   end
 
   resource "magmacrunch-jhc" do
@@ -86,43 +78,43 @@ class Magmacrunch < Formula
   end
 
   resource "magmacrunch-scandinavian-stud" do
-    url "https://files.pythonhosted.org/packages/f0/8f/16d19c7f5ec1f2f428209639f2cb9dfecc4cb553b74047c86cbd48d24850/magmacrunch_scandinavian_stud-0.1.1.tar.gz"
-    sha256 "614a1cdd1131574732454a6468ceb355550aec455b2dac5881aa5fdc0ce91959"
+    url "https://files.pythonhosted.org/packages/fa/f3/cc0eb0ac2e688f4c1099c9faaf4990038074f26fe9374d4edec51575ad10/magmacrunch_scandinavian_stud-0.1.2.tar.gz"
+    sha256 "e5eeeaacc6beeba1fa52ceee49f7fe90c82ef88a8be1da5e365b15b6371136fb"
   end
 
   resource "magmacrunch-solitaire" do
-    url "https://files.pythonhosted.org/packages/22/e0/d57330db56265be71242e76e5b2fc8901b84e14c87b9a019460779f5a385/magmacrunch_solitaire-0.1.1.tar.gz"
-    sha256 "152f5a0475205eeedfdcf40646d8d857fdf4992b3552bc25c147d97902fdde08"
+    url "https://files.pythonhosted.org/packages/51/1e/3413d1ac4c2167ff4db55734e48f0b851d8433bd9a1a4f172dcd6d9ac7a1/magmacrunch_solitaire-0.1.2.tar.gz"
+    sha256 "500560370272af783c5d060c2e3bcb2e59cf7bf461fd77ea3f78204c7b1c3808"
   end
 
   resource "magmacrunch-tarot" do
-    url "https://files.pythonhosted.org/packages/55/87/4d92cfc5db9872fe419a6c13a50663b6c71f36fef1a0d860f07626ba21aa/magmacrunch_tarot-0.1.2.tar.gz"
-    sha256 "82bb54ce9c481ef839c2200ede80146d6c574863a6e3fc50ba867edd33d8c86a"
+    url "https://files.pythonhosted.org/packages/a8/5e/41ad6caaa3ffcf66652a8af694a938d4217699c0ff93940a1c8e3e3dd5f4/magmacrunch_tarot-0.1.3.tar.gz"
+    sha256 "8e13406bfa3c4c47654264371b5d1bb583c25c630d31b72f9ea9caca42454aee"
   end
 
   resource "magmacrunch-thld" do
-    url "https://files.pythonhosted.org/packages/59/69/b813e307a6bc3a6a48b6c3a040bdbfb869ca1ea5163a8aacee9b1c2fa672/magmacrunch_thld-0.5.4.tar.gz"
-    sha256 "ac6b68bb1e5eb1d2902c0df6c41f7ae7bc8d758480d69939d6c3a2e5fd2a5f81"
+    url "https://files.pythonhosted.org/packages/ff/5d/3e9557981885034456c5637a3ab685acaad71394921a78c4ea4c21d28b0e/magmacrunch_thld-0.5.5.tar.gz"
+    sha256 "ee53865f90dcb04cd06f3576d219618ee2e5795f10927d81ca93df04e63270b1"
   end
 
   resource "magmacrunch-threes" do
-    url "https://files.pythonhosted.org/packages/27/32/a2ef044ed92ea7d4e683fa1911c9816e7edcbb9477de364c0b9f4f3a4034/magmacrunch_threes-0.2.2.tar.gz"
-    sha256 "d3ee5fe9e430f31c6e4f0319c27a12d8dab09973d631fe2275c47028efe10d2a"
+    url "https://files.pythonhosted.org/packages/94/c9/bc196002090bf60d63aac52a837fb3d3e007d70817986df9fd84d1d61564/magmacrunch_threes-0.2.3.tar.gz"
+    sha256 "a53c13b2a22ceadcee27259f6be6c8ae6ac7b77bf1a31a5a7fc9f5dc0b916725"
   end
 
   resource "magmacrunch-two-to-the-n" do
-    url "https://files.pythonhosted.org/packages/dd/d1/bd0f9178ca8e512a216bd578f89373be32b4a29028e0bb7fcbe99d298d37/magmacrunch_two_to_the_n-0.1.2.tar.gz"
-    sha256 "02c98883d0b2f7e0f159ce3872e014fdd980e8571f06aa7e6b0ac08071dc7f05"
+    url "https://files.pythonhosted.org/packages/8e/d3/770f0837c8d8b382259d8a649a82cd92926f773c86691a7fb46ff6ee64a7/magmacrunch_two_to_the_n-0.1.3.tar.gz"
+    sha256 "ac188c1f796bffa045def6dfb4ceae50261bbf33f20e36104b03a2545cfecf70"
   end
 
   resource "markdown-it-py" do
-    url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
-    sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+    url "https://files.pythonhosted.org/packages/16/fc/cee2c45553c9a9bf77d8b0c391560c556d7ed756b1f0bb35eb5d48db09ea/markdown_it_py-4.3.0.tar.gz"
+    sha256 "91a58fa5b72c71a40cf7177250fd767480d7a2bb3ac426ccfb76fb90305fdaaa"
   end
 
   resource "mdit-py-plugins" do
-    url "https://files.pythonhosted.org/packages/59/fc/f8d0863f8862f25602c0404d75568e89fb6b4109804645e5cdfb1be5cf56/mdit_py_plugins-0.6.1.tar.gz"
-    sha256 "a2bca0f039f39dbd35fb74ae1b5f998608c437463371f0ff7f49a19a17a114d0"
+    url "https://files.pythonhosted.org/packages/ad/a4/77a4e1be19fd9b08993c76d5e54979ac836b327754f1f5fecfed1b56cc67/mdit_py_plugins-0.7.0.tar.gz"
+    sha256 "26d2179227aaf4d1dc7acffe7a738cbd15cade6b5a61cff0a2cbf9fed93efede"
   end
 
   resource "mdurl" do
