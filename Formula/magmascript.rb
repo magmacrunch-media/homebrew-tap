@@ -3,23 +3,15 @@ class Magmascript < Formula
 
   desc "Scripting toolkit with domain-first subcommands"
   homepage "https://magmacrunch.com/ware/magmascript/"
-  url "https://files.pythonhosted.org/packages/bf/76/21e9e6127e588362938af12032439658daa2baa7c4cb55317cbaab64bd47/magmascript-4.1.0.tar.gz"
-  sha256 "cc2ac786dd0fb361f643722708742f6c2da60646efcd00091252c1df9baa5dbe"
+  url "https://files.pythonhosted.org/packages/02/6c/a323c41b17c1d81b34ebefa2f7b47f2aa69807d2829be8442c5b17d6c32d/magmascript-4.2.0.tar.gz"
+  sha256 "31d9cdaff81a8435610689cb59a16bdc335061f5e23bfff3df536c5d63336fd7"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmascript-4.1.0"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "8f341663a8dc1a4ddf367b1a0acf70571f17c32ba5ac4b38ba0edd89a0c6a91d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ca6ac7672c4bc168dc2cc689c41b68e2b9d2d76e868c73f5dc515f25028e5814"
-    sha256 cellar: :any,                 arm64_linux:   "7d66b9eb8be19e251222738e92d09f6224011a53eb941f6e0436f3829cdbdad0"
-    sha256 cellar: :any,                 x86_64_linux:  "4fc65ab0da2a94acca38f3164edd4865dea942b10fc82a248b99fe4472ef2e02"
-  end
 
   depends_on "python@3.13"
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/a9/d2/f4d173e22df740bc37b1db102b386ba719b66e95b0f0d751f556b387e6d2/anyio-4.15.1.tar.gz"
-    sha256 "9f28306018cbd6d329e64a36d58256edff76dd996fe423bc957326e578b82a94"
+    url "https://files.pythonhosted.org/packages/a1/98/7e457a3b014976887a050561955c0b76e1e7e2d6e27b78ecef2ef80518f2/anyio-4.16.0.tar.gz"
+    sha256 "59bb03251907983d1603d27c3087ddb1e93299ea2163adcdba37899a4fb12ffb"
   end
 
   resource "certifi" do
@@ -48,8 +40,8 @@ class Magmascript < Formula
   end
 
   resource "markdown-it-py" do
-    url "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz"
-    sha256 "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+    url "https://files.pythonhosted.org/packages/16/fc/cee2c45553c9a9bf77d8b0c391560c556d7ed756b1f0bb35eb5d48db09ea/markdown_it_py-4.3.0.tar.gz"
+    sha256 "91a58fa5b72c71a40cf7177250fd767480d7a2bb3ac426ccfb76fb90305fdaaa"
   end
 
   resource "mdurl" do
