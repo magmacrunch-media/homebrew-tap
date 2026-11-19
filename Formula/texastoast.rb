@@ -7,6 +7,14 @@ class Texastoast < Formula
   sha256 "aaf0349ab1202e6b5962ee9c893b97e51de2be9e4a656fb16c3fbeed98d500be"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/texastoast-0.12.3"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "e4a6fe8930d507f0d3bd2af21e5960a4ee4d2e0238c6e79e5bb4ca8226fb2201"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c8ff3ab4e062b569e72d4ce2e589194d8624f0bc4a21c4244840620c01f6882c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "177fe5a07803eb7c199aa4ce494bb17ddf2925bcbdd8dd0bb089aef46cb00b3d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "63c055bdff048670563083f3f3490abe324114a007232760b3b67b729d883a29"
+  end
+
   depends_on "python@3.12"
 
   def install
