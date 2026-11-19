@@ -67,6 +67,15 @@ jobs:
       # it. This is also the step that fails loudly when a new release cannot
       # have its dependency graph resolved at all - better here than in a
       # bottle build, and far better than in someone's terminal.
+      #
+      # --ignore-main-package-cooldown: Homebrew's resolver will not use a
+      # package uploaded less than a day ago (RELEASE_COOLDOWN_DAYS), a guard
+      # against freshly published malicious releases. Applied to the formula's
+      # own package it means a bump cannot run until our own release is a day
+      # old; texastoast 0.12.3 failed here 13 minutes after upload. Every
+      # formula in this tap is one of ours, so the flag exempts only our own
+      # releases; their dependencies still wait the full day. Homebrew ignores
+      # the flag on its official taps.
       - name: Regenerate the resource blocks
         if: steps.bump.outputs.changed == 'true'
         env:
@@ -77,7 +86,7 @@ jobs:
           cd "$(brew --repository "$GITHUB_REPOSITORY")"
           read -ra names <<< "${FORMULAE}"
           for formula in "${names[@]}"; do
-            brew update-python-resources "${OWNER}/tap/${formula}"
+            brew update-python-resources --ignore-main-package-cooldown "${OWNER}/tap/${formula}"
           done
 
       # GITHUB_TOKEN cannot open this pull request, and could not have done
