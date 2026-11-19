@@ -3,20 +3,12 @@ class Magmacrunch < Formula
 
   desc "Terminal arcade - a card grid of every installed cabinet"
   homepage "https://github.com/magmacrunch-media/magmacrunch"
-  url "https://files.pythonhosted.org/packages/f0/ea/01ccb80d8193abe2cec03c686e9428a0bdb82168aa9a33625a80e2b53291/magmacrunch-0.19.4.tar.gz"
-  sha256 "2deacd33092712b65ed36c5f83eebc31259a94dca6de7edba627d234083eea88"
+  url "https://files.pythonhosted.org/packages/89/ae/2b9ce2958b7caad276901c2c06f59346782fdba626539640656faa4bd2da/magmacrunch-0.19.5.tar.gz"
+  sha256 "3a2587862eda310a624df7f980637cd241bf34bcd8dfa4b4e9ff9029c53bf95e"
   # Not an open-source licence. The engine underneath (texastoast) is
   # Apache-2.0; the arcade and the games it seats are not, and a package cannot
   # be more permissive than what it depends on.
   license "PolyForm-Noncommercial-1.0.0"
-
-  bottle do
-    root_url "https://github.com/magmacrunch-media/homebrew-tap/releases/download/magmacrunch-0.19.4"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "dc8f21db03c37f0096e42dcb852eec2cf9f78068085f21796dca75ebd55a048d"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8b0ef3aebe471cabe056c8548dd0a1ca84a64307e4bf9c42e3955c1b7c477c7e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b40cc8611ce18d05d6b696e9146f4f4544119d72976a32878b7530ecef6128e7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "559b3079b91e7e0164efcf44f865d1aaa8bfda6a093782c34577c806baa777ad"
-  end
 
   depends_on "python@3.12"
 
@@ -131,8 +123,8 @@ class Magmacrunch < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/d7/9a/8475be631fb33ca1466915e70fd594c42a4e84b512db650eaa14f90fe75d/platformdirs-4.14.5.tar.gz"
-    sha256 "32e9921db7385aa8169bee4fe9501923e5715ba9fb7ea3b9c69b0d8e0639f7a1"
+    url "https://files.pythonhosted.org/packages/a6/2c/ec57eede0db493e61443c76ac7b4d24e94a24050afb3d598bf3678487f75/platformdirs-4.14.7.tar.gz"
+    sha256 "5472257c1cf97a14658af52997011c7e59e4aebf3a24950b973c11b579e1b074"
   end
 
   resource "pygments" do
