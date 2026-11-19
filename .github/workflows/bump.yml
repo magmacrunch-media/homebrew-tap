@@ -194,8 +194,23 @@ jobs:
             fi
           fi
 
+          # Push as the App, not as GITHUB_TOKEN. setup-homebrew put
+          # GITHUB_TOKEN in a global http extraheader, so a plain push is made
+          # by github-actions[bot], and GitHub holds the pull_request runs that
+          # push triggers at action_required. The branch then sits on a commit
+          # with no bottles until somebody approves them. That happens every
+          # time a dependency releases while a bump is waiting.
+          #
+          # The empty extraheader clears setup-homebrew's header for this one
+          # command before adding the App's. Two Authorization headers make
+          # GitHub answer 400, which is how magmascript's update-tap failed
+          # from v3.2.2 to v3.2.4.
           if [ "$push" = true ]; then
-            git push --force origin "$BRANCH"
+            auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+            echo "::add-mask::$auth"
+            git -c "http.https://github.com/.extraheader=" \
+                -c "http.https://github.com/.extraheader=Authorization: basic $auth" \
+                push --force origin "$BRANCH"
           fi
 
           if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[]')" ]; then
