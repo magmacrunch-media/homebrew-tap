@@ -92,6 +92,36 @@ gh run list -R magmacrunch-media/homebrew-tap --workflow bump.yml --limit 100 \
   --json conclusion --jq 'group_by(.conclusion)[]|"\(.[0].conclusion) \(length)"'
 ```
 
+## The branch push has to be the App's too
+
+`bump.yml` **rebuilds a waiting bump branch whenever a dependency releases**,
+because it regenerates the resource blocks every run and pushes when the tree
+differs. That is correct. Until 2026-11-19 the push itself was not the App's:
+`setup-homebrew` puts `GITHUB_TOKEN` in a global
+`http.https://github.com/.extraheader`, the App token went only to `gh`, so the
+push was made as `github-actions[bot]`. GitHub holds the `pull_request` runs
+such a push triggers at **`action_required`**, so the new head had no bottles
+and `pr-pull` had nothing to attach to it.
+
+That held magmacrunch 0.19.4 (#19) from 2026-11-12 to 2026-11-19. Bottles were
+built on 11-10 for `7fcf37f`; `markdown-it-py` 4.3.0 and `mdit-py-plugins`
+0.7.0 reached PyPI about 90 minutes later, and the 11-12 run pushed `cf44344`.
+`gh pr checks` read "no checks reported", which looks like CI never ran. The
+runs exist, under `gh run list --branch bump/<name>`, at `action_required`.
+**`gh run rerun <id>` by a person releases them**; then dispatch `publish.yml`
+with `head_sha` set to the new head.
+
+Fixed in `0808188`: the push clears the inherited extraheader with an empty
+value and sets the App's, for that one command. **The empty value is load
+bearing.** Without it git sends both headers and GitHub answers 400, the fault
+that broke magmascript's `update-tap` from v3.2.2 to v3.2.4. Checked with
+`GIT_TRACE_CURL=1 GIT_TRACE_REDACT=0` against a throwaway global config: one
+`Authorization` header with the reset, two without.
+
+**Not yet exercised in CI.** The next dependency release on a waiting bump is
+the test: its runs should show `magmacrunch-release[bot]` and start on their
+own.
+
 ## The workflows
 
 | | |
